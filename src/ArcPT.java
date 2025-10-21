@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 /**
  * Represents an arc from a Place to a Transition (input arc).
  * This arc type consumes tokens from a place when its connected transition fires.
@@ -75,5 +77,18 @@ public class ArcPT extends Arc {
     @Override
     public String toString() {
         return "ArcPT(weight=" + weight + ", active=" + isActive() + ")";
+    }
+    
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        ArcPT other = (ArcPT) obj;
+        return (from == other.from   && to == other.to);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getClass(), from, to);
     }
 }
