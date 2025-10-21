@@ -50,7 +50,25 @@ public class Transition {
     public ArrayList<ArcTP> getTPs() {
         return ArcTPs;
     }
-    
+
+    /**
+     * Removes the arcTP from ArcTPs.
+     * 
+     * @return list of output arcs
+     */
+        public void removeTP(ArcTP arc){
+        ArcTPs.remove(arc);
+    }
+
+    /**
+     * Removes the arcPT from ArcPTs.
+     * 
+     * @return list of output arcs
+     */
+    public void removePT(ArcPT arc){
+        ArcPTs.remove(arc);
+    }
+
     /**
      * Returns the list of input arcs (place to transition).
      * 

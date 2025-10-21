@@ -96,7 +96,9 @@ public class PetriNet implements PetriNetInterface{
      * @param arcPT the place-to-transition arc to remove
      */
     public void removeArcPT(ArcPT arcPT) {
+        Transition to = arcPT.getTo();
         arcs.remove(arcPT);
+        to.removePT(arcPT);
     }
 
     /**
@@ -105,7 +107,9 @@ public class PetriNet implements PetriNetInterface{
      * @param arcTP the transition-to-place arc to remove
      */
     public void removeArcTP(ArcTP arcTP) {
+        Transition from = arcTP.getFrom();
         arcs.remove(arcTP);
+        from.removeTP(arcTP);
     }
 
     /**
