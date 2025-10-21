@@ -3,7 +3,7 @@
  * A place can hold tokens and is connected to transitions via arcs.
  * Places are the passive elements in a Petri Net that represent conditions or resources.
  * 
- * @author PetriNet Project
+ * @author ABBASSI Rayene and BOUZID Adam
  * @version 1.0
  */
 public class Place {

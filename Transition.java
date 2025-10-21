@@ -6,7 +6,7 @@ import java.util.ArrayList;
  * When a transition fires, it consumes tokens from input places and produces tokens
  * to output places according to the arc weights.
  * 
- * @author PetriNet Project
+ * @author ABBASSI Rayene and BOUZID Adam
  * @version 1.0
  */
 public class Transition {

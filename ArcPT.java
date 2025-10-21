@@ -4,7 +4,7 @@
  * The arc is active (can fire) when the source place has at least as many tokens
  * as the arc's weight.
  * 
- * @author PetriNet Project
+ * @author ABBASSI Rayene and BOUZID Adam
  * @version 1.0
  */
 public class ArcPT extends Arc {

@@ -7,7 +7,7 @@ import java.util.Scanner;
  * to execute the Petri Net step by step. It supports interactive
  * transition firing and automatic deadlock detection.
  * 
- * @author PetriNet Project
+ * @author ABBASSI Rayene and BOUZID Adam
  * @version 1.0
  */
 public class PetriNet implements PetriNetInterface{

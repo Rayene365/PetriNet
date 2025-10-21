@@ -4,7 +4,7 @@
  * place when the transition fires, regardless of how many tokens are present.
  * The arc is active when the source place has at least one token.
  * 
- * @author PetriNet Project
+ * @author ABBASSI Rayene and BOUZID Adam
  * @version 1.0
  */
 public class ResetArc extends ArcPT{

@@ -3,7 +3,7 @@
  * Arcs connect places and transitions with an associated weight that determines
  * the number of tokens consumed or produced during a transition firing.
  * 
- * @author PetriNet Project
+ * @author ABBASSI Rayene and BOUZID Adam
  * @version 1.0
  */
 public class Arc {

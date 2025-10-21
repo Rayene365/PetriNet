@@ -3,7 +3,7 @@
  * This arc type produces tokens to a place when its connected transition fires.
  * Output arcs always allow the transition to fire (they don't impose conditions).
  * 
- * @author PetriNet Project
+ * @author ABBASSI Rayene and BOUZID Adam
  * @version 1.0
  */
 public class ArcTP extends Arc {

@@ -3,7 +3,7 @@
  * This interface provides methods for managing places, transitions, arcs,
  * and executing the Petri Net simulation.
  * 
- * @author PetriNet Project
+ * @author ABBASSI Rayene and BOUZID Adam
  * @version 1.0
  */
 public interface PetriNetInterface {

@@ -1,10 +1,9 @@
 /**
- * Represents a zero-test arc (inhibitor arc) in a Petri Net.
+ * Represents a zero-test arc in a Petri Net.
  * A ZeroArc is a special type of input arc that is only active when the source
  * place has exactly zero tokens. It does not consume any tokens when the transition fires.
- * This arc type is useful for testing emptiness conditions.
  * 
- * @author PetriNet Project
+ * @author ABBASSI Rayene and BOUZID Adam
  * @version 1.0
  */
 public class ZeroArc extends ArcPT{
