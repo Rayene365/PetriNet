@@ -187,18 +187,24 @@ public class PetriNet implements PetriNetInterface{
             
             System.out.print("Enter your choice (1-" + enabled.size() + "): ");
             
-            try {
-                int choice = scanner.nextInt();
-                if (choice >= 1 && choice <= enabled.size()) {
-                    enabled.get(choice - 1).fire();
-                    System.out.println("Transition " + (choice - 1) + " fired successfully!");
-                } else {
-                    System.out.println("Invalid choice. Please enter a number between 1 and " + enabled.size());
+            boolean fired = false;
+
+            while (!fired){
+                try {
+                    int choice = scanner.nextInt();
+                    if (choice >= 1 && choice <= enabled.size()) {
+                        enabled.get(choice - 1).fire();
+                        System.out.println("Transition " + (choice - 1) + " fired successfully!");
+                        fired = true;
+                    } else {
+                        System.out.println("Invalid choice. Please enter a number between 1 and " + enabled.size());
+                    }
+                } catch (Exception e) {
+                    System.out.println("Invalid input. Please enter a valid number.");
+                    scanner.nextLine(); // Clear the invalid input
                 }
-            } catch (Exception e) {
-                System.out.println("Invalid input. Please enter a valid number.");
-                scanner.nextLine(); // Clear the invalid input
             }
+
         }
     }
     
