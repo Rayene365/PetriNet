@@ -1,3 +1,5 @@
+package petrinet;
+
 /**
  * Represents a place in a Petri Net.
  * A place can hold tokens and is connected to transitions via arcs.

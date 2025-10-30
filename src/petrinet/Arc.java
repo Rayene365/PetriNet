@@ -1,3 +1,5 @@
+package petrinet;
+
 /**
  * Represents a basic arc in a Petri Net.
  * Arcs connect places and transitions with an associated weight that determines

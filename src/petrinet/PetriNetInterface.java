@@ -1,3 +1,5 @@
+package petrinet;
+
 /**
  * Interface defining the core operations for a Petri Net.
  * This interface provides methods for managing places, transitions, arcs,

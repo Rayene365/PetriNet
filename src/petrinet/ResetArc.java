@@ -1,3 +1,5 @@
+package petrinet;
+
 /**
  * Represents a reset arc in a Petri Net.
  * A ResetArc is a special type of input arc that removes all tokens from the source

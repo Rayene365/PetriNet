@@ -1,3 +1,5 @@
+package petrinet;
+
 /**
  * Represents a zero-test arc in a Petri Net.
  * A ZeroArc is a special type of input arc that is only active when the source

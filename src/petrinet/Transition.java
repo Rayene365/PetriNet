@@ -1,3 +1,5 @@
+package petrinet;
+
 import java.util.ArrayList;
 
 /**
