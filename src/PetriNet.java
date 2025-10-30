@@ -43,6 +43,7 @@ public class PetriNet implements PetriNetInterface{
     public void addArcPT(ArcPT arcPT) {
         if(arcs.contains(arcPT)){
             System.out.println("ArcPT already exists ");
+            arcPT.getTo().removePT(arcPT);
         }else{
             arcs.add(arcPT);
         }
@@ -57,6 +58,7 @@ public class PetriNet implements PetriNetInterface{
     public void addArcTP(ArcTP arcTP) {
         if(arcs.contains(arcTP)){
             System.out.println("ArcTP already exists ");
+            arcTP.getFrom().removeTP(arcTP);
         }else{
             arcs.add(arcTP);   
         }
@@ -148,6 +150,104 @@ public class PetriNet implements PetriNetInterface{
      */
     public void setWeight(Arc arc, int weight) {
         arc.setWeight(weight);
+    }
+
+    /**
+     * Builds a human readable snapshot of the Petri Net content.
+     *
+     * @return textual description of the current Petri Net
+     */
+    public String describe() {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("Places:\n");
+        if (places.isEmpty()) {
+            sb.append("  (none)\n");
+        } else {
+            for (int i = 0; i < places.size(); i++) {
+                Place place = places.get(i);
+                sb.append("  ")
+                  .append("P").append(i)
+                  .append(" tokens=").append(place.getTokens())
+                  .append("\n");
+            }
+        }
+
+        sb.append("Transitions:\n");
+        if (transitions.isEmpty()) {
+            sb.append("  (none)\n");
+        } else {
+            for (int i = 0; i < transitions.size(); i++) {
+                Transition transition = transitions.get(i);
+                sb.append("  ")
+                  .append("T").append(i)
+                  .append(" enabled=").append(transition.isEnabled())
+                  .append(" in=").append(transition.getPTs().size())
+                  .append(" out=").append(transition.getTPs().size())
+                  .append("\n");
+            }
+        }
+
+        sb.append("Arcs:\n");
+        boolean hasPT = false;
+        boolean hasTP = false;
+        for (Arc arc : arcs) {
+            if (arc instanceof ArcPT) {
+                hasPT = true;
+            } else if (arc instanceof ArcTP) {
+                hasTP = true;
+            }
+        }
+
+        sb.append("  Input:\n");
+        if (!hasPT) {
+            sb.append("    (none)\n");
+        } else {
+            for (Arc arc : arcs) {
+                if (arc instanceof ArcPT) {
+                    ArcPT arcPT = (ArcPT) arc;
+                    sb.append("    ")
+                      .append(labelPlace(arcPT.getFrom()))
+                      .append(" -[")
+                      .append(arcPT.getClass().getSimpleName())
+                      .append(" w=").append(arc.getWeight())
+                      .append("]-> ")
+                      .append(labelTransition(arcPT.getTo()))
+                      .append("\n");
+                }
+            }
+        }
+
+        sb.append("  Output:\n");
+        if (!hasTP) {
+            sb.append("    (none)\n");
+        } else {
+            for (Arc arc : arcs) {
+                if (arc instanceof ArcTP) {
+                    ArcTP arcTP = (ArcTP) arc;
+                    sb.append("    ")
+                      .append(labelTransition(arcTP.getFrom()))
+                      .append(" -[")
+                      .append(arcTP.getClass().getSimpleName())
+                      .append(" w=").append(arc.getWeight())
+                      .append("]-> ")
+                      .append(labelPlace(arcTP.getTo()))
+                      .append("\n");
+                }
+            }
+        }
+
+        return sb.toString().trim();
+    }
+
+    private String labelPlace(Place place) {
+        int index = places.indexOf(place);
+        return index >= 0 ? "P" + index : "Place?";
+    }
+
+    private String labelTransition(Transition transition) {
+        int index = transitions.indexOf(transition);
+        return index >= 0 ? "T" + index : "Transition?";
     }
 
     /**

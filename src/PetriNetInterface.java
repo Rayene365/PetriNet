@@ -107,4 +107,13 @@ public interface PetriNetInterface {
      * @param weight the new weight for the arc
      */
     void setWeight(Arc arc, int weight);
+
+    // Visualization
+
+    /**
+     * Produces a textual representation of the current Petri Net state.
+     *
+     * @return a human readable description of the Petri Net
+     */
+    String describe();
 }

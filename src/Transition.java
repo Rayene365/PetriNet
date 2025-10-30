@@ -52,21 +52,27 @@ public class Transition {
     }
 
     /**
-     * Removes the arcTP from ArcTPs.
-     * 
-     * @return list of output arcs
+     * Removes the arcTP from ArcTPs (identity-based to avoid removing clones).
      */
-        public void removeTP(ArcTP arc){
-        ArcTPs.remove(arc);
+    public void removeTP(ArcTP arc){
+        for (int i = 0; i < ArcTPs.size(); i++) {
+            if (ArcTPs.get(i) == arc) {
+                ArcTPs.remove(i);
+                return;
+            }
+        }
     }
 
     /**
-     * Removes the arcPT from ArcPTs.
-     * 
-     * @return list of output arcs
+     * Removes the arcPT from ArcPTs (identity-based to avoid removing clones).
      */
     public void removePT(ArcPT arc){
-        ArcPTs.remove(arc);
+        for (int i = 0; i < ArcPTs.size(); i++) {
+            if (ArcPTs.get(i) == arc) {
+                ArcPTs.remove(i);
+                return;
+            }
+        }
     }
 
     /**
