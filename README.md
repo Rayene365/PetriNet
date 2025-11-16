@@ -1,139 +1,274 @@
 # PetriNet
 
-A Java implementation of a Petri Net simulation system with support for various arc types including standard arcs, zero-test arcs, and reset arcs.
+Implémentation Java d'un système de simulation de réseaux de Petri avec support pour différents types d'arcs, incluant les arcs standards, les arcs zéro et les arcs de remise à zéro.
 
-## Table of Contents
-- [Overview](#overview)
-- [Features](#features)
+## Table des matières
+- [Aperçu](#aperçu)
+- [Fonctionnalités](#fonctionnalités)
+- [Démarrage](#démarrage)
+  - [Compilation](#compilation)
+  - [Exécution des tests](#exécution-des-tests)
 - [Architecture](#architecture)
-- [Classes Documentation](#classes-documentation)
-- [Arc Types](#arc-types)
+- [Évolution du diagramme de classes UML](#évolution-du-diagramme-de-classes-uml)
+- [Documentation des classes](#documentation-des-classes)
+- [Types d'arcs](#types-darcs)
 
 
-## Overview
+## Aperçu
 
-A Petri Net is a mathematical modeling language for the description of distributed systems. It consists of places, transitions, and arcs that connect them. Places can contain tokens, and transitions can fire when their input conditions are met, moving tokens through the network.
+Un réseau de Petri est un langage de modélisation mathématique pour la description de systèmes distribués. Il se compose de places, transitions et arcs qui les connectent. Les places peuvent contenir des jetons, et les transitions peuvent être franchies lorsque leurs conditions d'entrée sont satisfaites, déplaçant ainsi les jetons à travers le réseau.
 
-This implementation provides a flexible framework for creating and simulating Petri Nets with the following components:
-- **Places**: Hold tokens and represent conditions or resources
-- **Transitions**: Active components that can fire when enabled
-- **Arcs**: Connect places to transitions and vice versa with configurable weights
-- **Special Arc Types**: Support for zero-test arcs and reset arcs
+Cette implémentation fournit un framework flexible pour créer et simuler des réseaux de Petri avec les composants suivants :
+- **Places** : Contiennent des jetons et représentent des conditions ou des ressources
+- **Transitions** : Composants actifs qui peuvent être franchis lorsqu'ils sont activés
+- **Arcs** : Connectent les places aux transitions et vice versa avec des poids configurables
+- **Types d'arcs spéciaux** : Support pour les arcs zero-test et les arcs de remise à zéro
 
-## Features
 
--  Standard Petri Net semantics (places, transitions, weighted arcs)
--  Interactive step-by-step execution
--  Automatic deadlock detection
--  Multiple arc types:
-  - Standard arcs (ArcPT, ArcTP)
-  - Zero-test arcs (inhibitor arcs)
-  - Reset arcs
--  Comprehensive JavaDoc documentation
--  Type-safe implementation with proper encapsulation
+## Démarrage
+
+### Prérequis
+
+- Java Development Kit (JDK) 8 ou supérieur
+- Un IDE Java (Eclipse, IntelliJ IDEA, VS Code) ou le compilateur `javac` en ligne de commande
+
+### Compilation
+
+Depuis le répertoire racine du projet :
+
+```bash
+# Créer le répertoire bin
+mkdir -p bin
+
+# Compiler tous les fichiers source
+javac -d bin src/petrinet/*.java
+
+# Compiler les fichiers de test (nécessite JUnit 5)
+
+```
+
+### Exécution des tests
+
+Après compilation :
+
+```bash
+# Avec un IDE Eclipse ou IntelliJ
+# Clic droit sur un fichier de test > Run As > JUnit Test
+
+# En ligne de commande (si JUnit est configuré)
+java -jar lib/junit-platform-console-standalone.jar \
+  --class-path bin \
+  --scan-class-path
+```
+
+**Note** : Les tests utilisent JUnit 5. Si vous n'avez pas JUnit, vous pouvez créer un simple test manuel (voir section suivante).
+
+
+### Exécuter vos propres simulations
+
+Créez une classe principale dans le package `petrinet` :
+
+**Fichier : `src/petrinet/Main.java`**
+```java
+package petrinet;
+
+public class Main {
+    public static void main(String[] args) {
+        PetriNet net = new PetriNet();
+        
+        Place p1 = new Place(5);
+        Place p2 = new Place(0);
+        Transition t = new Transition();
+        
+        net.addPlace(p1);
+        net.addPlace(p2);
+        net.addTransition(t);
+        
+        new ArcPT(p1, t, 1);
+        new ArcTP(t, p2, 1);
+        
+        net.step(); // Exécution interactive
+    }
+}
+```
+
+Puis compilez et exécutez :
+```bash
+javac -d bin src/petrinet/Main.java
+java -cp bin petrinet.Main
+```
 
 ## Architecture
 
-### Core Classes
+### Classes principales
 
 ```
-PetriNet                    (Main simulation controller)
-├── Place                   (Holds tokens)
-├── Transition              (Fires when enabled)
-└── Arc                     (Base class for connections)
+PetriNet                    (Contrôleur principal de simulation)
+├── Place                   (Contient des jetons)
+├── Transition              (Se déclenche quand activée)
+└── Arc                     (Classe de base pour les connexions)
     ├── ArcPT               (Place → Transition)
-    │   ├── ZeroArc         (Activates when place is empty)
-    │   └── ResetArc        (Removes all tokens)
+    │   ├── ZeroArc         (S'active quand la place est vide)
+    │   └── ResetArc        (Retire tous les jetons)
     └── ArcTP               (Transition → Place)
 ```
 
-### Class Relationships
+### Relations entre classes
 
-- **PetriNet**: Manages the entire network and provides the simulation interface
-- **Place**: Passive component that holds tokens
-- **Transition**: Active component that fires when all input arcs are active
-- **Arc**: Base class defining weighted connections
-- **ArcPT**: Input arc from place to transition (consumes tokens)
-- **ArcTP**: Output arc from transition to place (produces tokens)
-- **ZeroArc**: Special arc active only when place has 0 tokens
-- **ResetArc**: Special arc that removes all tokens from a place
+- **PetriNet** : Gère l'ensemble du réseau et fournit l'interface de simulation
+- **Place** : Composant passif qui contient des jetons
+- **Transition** : Composant actif qui se déclenche lorsque tous ses arcs d'entrée sont actifs
+- **Arc** : Classe de base définissant les connexions pondérées
+- **ArcPT** : Arc d'entrée de place vers transition (consomme des jetons)
+- **ArcTP** : Arc de sortie de transition vers place (produit des jetons)
+- **ZeroArc** : Arc spécial actif uniquement lorsque la place a 0 jetons
+- **ResetArc** : Arc spécial qui retire tous les jetons d'une place
 
-## Classes Documentation
+## UML Class Diagram Evolution
+
+### Comparison: Initial Design vs. Final Implementation
+
+Notre implémentation finale présente quelques différences par rapport au diagramme de conception initial :
+
+#### **Diagramme Initial (Conception)**
+Le diagramme initial montrait une architecture théorique avec :
+- Une interface `PetriNetInterface` définissant le contrat
+- Des classes de base `Arc`, `Place`, `Transition`
+- Des spécialisations d'arcs : `ArcPT`, `ArcTP`, `ZeroArc`, `ResetArc`
+- La classe principale `PetriNet` implémentant l'interface
+
+#### **Diagramme Final (Implémentation réelle - généré avec ObjectAid)**
+Le diagramme final, généré automatiquement à partir du code source, reflète l'implémentation réelle :
+
+**Modifications et améliorations :**
+
+1. **Structure conservée** : La hiérarchie des classes est conforme à la conception initiale
+   - `Arc` comme classe de base avec l'attribut `weight`
+   - `ArcPT` et `ArcTP` héritant de `Arc`
+   - `ZeroArc` et `ResetArc` héritant de `ArcPT`
+
+2. **Relations bidirectionnelles** :
+   - Les arcs maintiennent des références vers les places et transitions
+   - `Transition` contient des listes `ArrayList<ArcPT>` et `ArrayList<ArcTP>`
+   - Auto-enregistrement des arcs lors de leur création
+
+3. **Responsabilités clarifiées** :
+   - `Place` : gestion simple des tokens (attribut `tokens`)
+   - `Transition` : logique de vérification (`isEnabled()`) et d'exécution (`fire()`)
+   - `PetriNet` : coordination globale et interface utilisateur (méthode `step()`)
+
+4. **Encapsulation renforcée** :
+   - Attributs `protected` dans la hiérarchie des `Arc`
+   - Attributs `private` dans `PetriNet`, `Place`, et `Transition`
+   - Méthodes publiques bien définies
+
+**Points notables de l'implémentation finale :**
+-  Gestion automatique des arcs (ajout à la transition lors de la construction)
+-  Validation des poids (≥ 0) dans la classe `Arc`
+-  Méthodes spécialisées `consume()` et `produce()` pour les différents types d'arcs
+-  Scanner intégré dans `PetriNet` pour l'exécution interactive
+-  Gestion des cas particuliers (deadlock, transition unique, choix multiple)
+
+Le diagramme final confirme que l'implémentation respecte fidèlement la conception initiale tout en ajoutant les détails nécessaires au bon fonctionnement du système.
+
+## Documentation des classes
 
 ### PetriNet
-Main controller class implementing `PetriNetInterface`. Manages all places, transitions, and arcs in the network.
+Classe contrôleur principale implémentant `PetriNetInterface`. Gère toutes les places, transitions et arcs du réseau.
 
-**Key Methods:**
-- `addPlace(Place)` / `removePlace(Place)` - Manage places
-- `addTransition(Transition)` / `removeTransition(Transition)` - Manage transitions
-- `addArcPT(ArcPT)` / `addArcTP(ArcTP)` - Add arcs
-- `step()` - Execute one simulation step
-- `addTokens(Place, int)` / `removeTokens(Place, int)` - Token management (removal throws if it would make the place negative)
+**Méthodes principales :**
+- `addPlace(Place)` / `removePlace(Place)` - Gérer les places
+- `addTransition(Transition)` / `removeTransition(Transition)` - Gérer les transitions
+- `addArcPT(ArcPT)` / `addArcTP(ArcTP)` - Ajouter des arcs
+- `step()` - Exécuter une étape de simulation
+- `addTokens(Place, int)` / `removeTokens(Place, int)` - Gestion des jetons (la suppression lève une exception si elle rendrait la place négative)
 
 ### Place
-Represents a place in the Petri Net that can hold tokens.
+Représente une place dans le réseau de Petri qui peut contenir des jetons.
 
-**Key Methods:**
-- `getTokens()` - Returns current token count
-- `addTokens(int)` - Adds tokens to the place
-- `removeTokens(int)` - Removes tokens and throws `IllegalArgumentException` if the operation would go negative
+**Méthodes principales :**
+- `getTokens()` - Retourne le nombre actuel de jetons
+- `addTokens(int)` - Ajoute des jetons à la place
+- `removeTokens(int)` - Retire des jetons et lève `IllegalArgumentException` si l'opération rendrait le compte négatif
 
 ### Transition
-Active component that fires when all input arcs are active.
+Composant actif qui se déclenche lorsque tous ses arcs d'entrée sont actifs.
 
-**Key Methods:**
-- `isEnabled()` - Checks if transition can fire
-- `fire()` - Fires the transition (consumes inputs, produces outputs)
-- `addArcPT(ArcPT)` / `addArcTP(ArcTP)` - Register arcs
+**Méthodes principales :**
+- `isEnabled()` - Vérifie si la transition peut se déclencher
+- `fire()` - Déclenche la transition (consomme les entrées, produit les sorties)
+- `addArcPT(ArcPT)` / `addArcTP(ArcTP)` - Enregistrer des arcs
 
 ### Arc
-Base class for all arc types with a configurable weight.
+Classe de base pour tous les types d'arcs avec un poids configurable.
 
-**Key Methods:**
-- `getWeight()` / `setWeight(int)` - Manage arc weight
+**Méthodes principales :**
+- `getWeight()` / `setWeight(int)` - Gérer le poids de l'arc
 
-## Arc Types
+## Types d'arcs
 
-### Standard Arcs
+### Arcs standards
 
 **ArcPT (Place → Transition)**
-- Input arc that consumes tokens from a place
-- Active when place has ≥ weight tokens
-- Consumes exactly `weight` tokens when transition fires
+- Arc d'entrée qui consomme des jetons d'une place
+- Actif lorsque la place a ≥ poids jetons
+- Consomme exactement `poids` jetons lors du franchissement de la transition
 
 **ArcTP (Transition → Place)**
-- Output arc that produces tokens to a place
-- Always allows transition to fire
-- Produces exactly `weight` tokens when transition fires
+- Arc de sortie qui produit des jetons vers une place
+- Permet toujours à la transition de se déclencher
+- Produit exactement `poids` jetons lors du franchissement de la transition
 
-### Special Arc Types
+### Types d'arcs spéciaux
 
-**ZeroArc (Inhibitor Arc)**
-- Extends ArcPT
-- Active only when source place has exactly 0 tokens
-- Does not consume any tokens
+**ZeroArc (Arc inhibiteur)**
+- Étend ArcPT
+- Actif uniquement lorsque la place source a exactement 0 jetons
+- Ne consomme aucun jeton
 
 **ResetArc**
-- Extends ArcPT
-- Active when source place has ≥ 1 token
-- Removes ALL tokens from source place (not just `weight`)
+- Étend ArcPT
+- Actif lorsque la place source a ≥ 1 jeton
+- Retire TOUS les jetons de la place source (pas seulement `poids`)
 
-## Project Structure
+## Structure du projet
 
 ```
 PetriNet/
-├── Arc.java                    # Base arc class
-├── ArcPT.java                  # Place-to-Transition arc
-├── ArcTP.java                  # Transition-to-Place arc
-├── ZeroArc.java                # Zero-test (inhibitor) arc
-├── ResetArc.java               # Reset arc
-├── Place.java                  # Place class
-├── Transition.java             # Transition class
-├── PetriNet.java               # Main Petri Net implementation
-├── PetriNetInterface.java      # Interface definition
-└── README.md                   # This file
+├── src/                            # Répertoire du code source
+│   └── petrinet/                   # Package principal
+│       ├── Arc.java                    # Classe de base des arcs
+│       ├── ArcPT.java                  # Arc Place vers Transition
+│       ├── ArcTP.java                  # Arc Transition vers Place
+│       ├── ZeroArc.java                # Arc zero-test (inhibiteur)
+│       ├── ResetArc.java               # Arc de remise à zéro
+│       ├── Place.java                  # Classe Place
+│       ├── Transition.java             # Classe Transition
+│       ├── PetriNet.java               # Implémentation principale
+│       └── PetriNetInterface.java      # Définition de l'interface
+├── test/                           # Répertoire des tests
+│   └── petrinet/                   # Package de tests
+│       ├── PetriNetActivationTest.java    # Tests d'activation
+│       ├── PetriNetCreationTest.java      # Tests de création
+│       ├── PetriNetDestructionTest.java   # Tests de destruction
+│       └── PetriNetDisplayTest.java       # Tests d'affichage
+├── Diagrammes/                     # Diagrammes UML
+│   ├── UML classe.png                  # Diagramme de classes final
+│   └── UML classe.ucls                 # Fichier ObjectAid
+├── docs/                           # Documentation
+│   ├── README.md                       # Documentation détaillée
+│   └── plan_de_tests.md                # Plan de tests
+├── bin/                            # Classes compilées (généré)
+├── .classpath                      # Configuration Eclipse
+├── .project                        # Projet Eclipse
+└── README.md                       # Ce fichier
 ```
 
-## Authors
+## Auteurs
 
-ABBASSI Rayene and BOUZID Adam
+**ABBASSI Rayene** et **BOUZID Adam**  
+Télécom Bretagne - 2025
+
+---
+
+*Projet développé dans le cadre du cours de Programmation Java*
