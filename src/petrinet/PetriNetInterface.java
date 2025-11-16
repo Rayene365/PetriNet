@@ -97,6 +97,7 @@ public interface PetriNetInterface {
      * 
      * @param place the place to remove tokens from
      * @param tokens the number of tokens to remove
+     * @throws IllegalArgumentException if the removal would make the place negative
      */
     void removeTokens(Place place, int tokens);
     

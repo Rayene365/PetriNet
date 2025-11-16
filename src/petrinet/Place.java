@@ -36,8 +36,15 @@ public class Place {
      * This is typically called when a transition fires and consumes tokens.
      * 
      * @param n the number of tokens to remove
+     * @throws IllegalArgumentException if n is negative or would make the place go below zero tokens
      */
     public void removeTokens(int n) {
+        if (n < 0) {
+            throw new IllegalArgumentException("Cannot remove a negative number of tokens");
+        }
+        if (tokens - n < 0) {
+            throw new IllegalArgumentException("Removing " + n + " tokens would make the place negative");
+        }
         tokens -= n;
     }
 
