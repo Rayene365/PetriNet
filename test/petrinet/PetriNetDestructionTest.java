@@ -1,6 +1,7 @@
 package petrinet;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -17,6 +18,16 @@ class PetriNetDestructionTest {
         net.removeTokens(place, 3);
 
         assertEquals(1, place.getTokens());
+    }
+
+    @Test
+    void removingTooManyTokensFailsFast() {
+        PetriNet net = new PetriNet();
+        Place place = new Place(2);
+        net.addPlace(place);
+
+        assertThrows(IllegalArgumentException.class, () -> net.removeTokens(place, 3));
+        assertEquals(2, place.getTokens());
     }
 
     @Test

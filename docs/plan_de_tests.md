@@ -7,7 +7,8 @@ Ce document complete les sections 7.2 et 7.3 du plan de test pour le reseau de P
 | Fonction | Entrees | Cas | Code (ID) | Resultat Attendu |
 |----------|---------|-----|-----------|------------------|
 | Suppression de jetons | Place avec 4 jetons | Appel de `removeTokens(P, 3)` | SJP-01 | P conserve 1 jeton (`PetriNetDestructionTest.removeTokensUpdatesPlace`) |
-| Suppression de jetons | Arc PT de poids 2, P=2 | `transition.fire()` | SJP-02 | P perd 2 jetons (`PetriNetActivationTest.transitionFireMovesTokensToOutputs`) |
+| Suppression de jetons invalide | Place avec 2 jetons | Appel de `removeTokens(P, 3)` | SJP-02 | Exception `IllegalArgumentException` (`PetriNetDestructionTest.removingTooManyTokensFailsFast`) |
+| Suppression de jetons | Arc PT de poids 2, P=2 | `transition.fire()` | SJP-03 | P perd 2 jetons (`PetriNetActivationTest.transitionFireMovesTokensToOutputs`) |
 | Creation d'Arc PT | Couple P/T rattache | `addArcPT(new ArcPT(P,T,2))` | CAR-01 | Transition liste l'arc unique (`PetriNetCreationTest.arcPTRegistersOnTransition`) |
 | Creation d'Arc TP | Couple T/P rattache | `addArcTP(new ArcTP(T,P,4))` | CAR-02 | Transition liste l'arc unique (`PetriNetCreationTest.arcTPRegistersOnTransition`) |
 | Arc PT en double | ArcPT(P,T,1) deja present | Ajout d'une nouvelle instance | GAD-01 | Transition ne garde qu'un exemplaire (`PetriNetCreationTest.duplicateArcPTIsRejectedAndNotKeptOnTransition`) |

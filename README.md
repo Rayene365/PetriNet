@@ -68,7 +68,7 @@ Main controller class implementing `PetriNetInterface`. Manages all places, tran
 - `addTransition(Transition)` / `removeTransition(Transition)` - Manage transitions
 - `addArcPT(ArcPT)` / `addArcTP(ArcTP)` - Add arcs
 - `step()` - Execute one simulation step
-- `addTokens(Place, int)` / `removeTokens(Place, int)` - Token management
+- `addTokens(Place, int)` / `removeTokens(Place, int)` - Token management (removal throws if it would make the place negative)
 
 ### Place
 Represents a place in the Petri Net that can hold tokens.
@@ -76,7 +76,7 @@ Represents a place in the Petri Net that can hold tokens.
 **Key Methods:**
 - `getTokens()` - Returns current token count
 - `addTokens(int)` - Adds tokens to the place
-- `removeTokens(int)` - Removes tokens from the place
+- `removeTokens(int)` - Removes tokens and throws `IllegalArgumentException` if the operation would go negative
 
 ### Transition
 Active component that fires when all input arcs are active.
