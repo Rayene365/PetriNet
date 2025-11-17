@@ -4,15 +4,14 @@ Implémentation Java d'un système de simulation de réseaux de Petri avec suppo
 
 ## Table des matières
 - [Aperçu](#aperçu)
-- [Fonctionnalités](#fonctionnalités)
 - [Démarrage](#démarrage)
   - [Compilation](#compilation)
-  - [Exécution des tests](#exécution-des-tests)
 - [Architecture](#architecture)
 - [Évolution du diagramme de classes UML](#évolution-du-diagramme-de-classes-uml)
 - [Documentation des classes](#documentation-des-classes)
 - [Types d'arcs](#types-darcs)
 
+>  **Pour un référentiel complet des documents du projet**, consultez [`REFERENTIEL.md`](REFERENTIEL.md)
 
 ## Aperçu
 
@@ -47,26 +46,9 @@ javac -d bin src/petrinet/*.java
 
 ```
 
-### Exécution des tests
-
-Après compilation :
-
-```bash
-# Avec un IDE Eclipse ou IntelliJ
-# Clic droit sur un fichier de test > Run As > JUnit Test
-
-# En ligne de commande (si JUnit est configuré)
-java -jar lib/junit-platform-console-standalone.jar \
-  --class-path bin \
-  --scan-class-path
-```
-
-**Note** : Les tests utilisent JUnit 5. Si vous n'avez pas JUnit, vous pouvez créer un simple test manuel (voir section suivante).
-
-
 ### Exécuter vos propres simulations
 
-Créez une classe principale dans le package `petrinet` :
+On a créé une classe principale dans le package `petrinet` Main.java :
 
 **Fichier : `src/petrinet/Main.java`**
 ```java
@@ -92,7 +74,7 @@ public class Main {
 }
 ```
 
-Puis compilez et exécutez :
+Compilez et exécutez :
 ```bash
 javac -d bin src/petrinet/Main.java
 java -cp bin petrinet.Main
@@ -124,9 +106,9 @@ PetriNet                    (Contrôleur principal de simulation)
 - **ZeroArc** : Arc spécial actif uniquement lorsque la place a 0 jetons
 - **ResetArc** : Arc spécial qui retire tous les jetons d'une place
 
-## UML Class Diagram Evolution
+## Evolution du diagramme de classe
 
-### Comparison: Initial Design vs. Final Implementation
+### Comparaison: Conception Initiale vs. Diagramme de classe final
 
 Notre implémentation finale présente quelques différences par rapport au diagramme de conception initial :
 
@@ -267,8 +249,8 @@ PetriNet/
 ## Auteurs
 
 **ABBASSI Rayene** et **BOUZID Adam**  
-Télécom Bretagne - 2025
+
 
 ---
 
-*Projet développé dans le cadre du cours de Programmation Java*
+*Projet développé dans le cadre du cours de MAPD*
